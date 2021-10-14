@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import * as S from './styles'
 import Modal from 'react-modal'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { NewTransactionContext } from '../../context/newTransactionContext'
 
 type ModalProps = {
   closeModal: () => void
@@ -9,7 +10,17 @@ type ModalProps = {
 }
 
 export function ModalComponent({ closeModal, modalIsOpen }: ModalProps) {
+  const { setTransactions, transactions } = useContext(NewTransactionContext)
   const [type, setType] = useState('income')
+  const [title, setTitle] = useState('')
+  const [amount, setAmount] = useState(0)
+  const [category, setCategory] = useState('')
+
+  function handleFormSubmit(event: React.SyntheticEvent) {
+    event.preventDefault()
+    setTransactions([...transactions, { title, amount, category, type }])
+    closeModal()
+  }
 
   return (
     <Modal
@@ -25,8 +36,16 @@ export function ModalComponent({ closeModal, modalIsOpen }: ModalProps) {
       <S.Container>
         <h1>New Transaction</h1>
 
-        <input type="text" placeholder="Title" />
-        <input type="number" placeholder="Amount" />
+        <input
+          onChange={(e) => setTitle(e.target.value)}
+          type="text"
+          placeholder="Title"
+        />
+        <input
+          onChange={(e) => setAmount(Number(e.target.value))}
+          type="number"
+          placeholder="Amount"
+        />
 
         <S.TransactionTypeContainer>
           <S.RadioBoxButton
@@ -54,8 +73,14 @@ export function ModalComponent({ closeModal, modalIsOpen }: ModalProps) {
           </S.RadioBoxButton>
         </S.TransactionTypeContainer>
 
-        <input type="text" placeholder="Category" />
-        <button type="submit">Create</button>
+        <input
+          onChange={(e) => setCategory(e.target.value)}
+          type="text"
+          placeholder="Category"
+        />
+        <button type="submit" onClick={handleFormSubmit}>
+          Create
+        </button>
       </S.Container>
     </Modal>
   )

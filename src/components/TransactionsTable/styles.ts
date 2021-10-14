@@ -31,11 +31,11 @@ export const Container = styled.div`
       border-radius: 0 0.25rem 0.25rem 0;
     }
 
-    &.deposit {
+    &.income {
       color: #3ecf8e;
     }
 
-    &.withdraw {
+    &.expense {
       color: #ef4444;
     }
   }

@@ -1,6 +1,10 @@
 import * as S from './styles'
+import { NewTransactionContext } from '../../context/newTransactionContext'
+import { useContext } from 'react'
 
 export function TransactionsTable() {
+  const { transactions } = useContext(NewTransactionContext)
+
   return (
     <S.Container>
       <table>
@@ -13,19 +17,16 @@ export function TransactionsTable() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Water</td>
-            <td className="withdraw">- 12</td>
-            <td>Home Expenses</td>
-            <td>10/02/2021</td>
-          </tr>
-
-          <tr>
-            <td>Donation</td>
-            <td className="deposit">1200</td>
-            <td>Open Source</td>
-            <td>10/10/2021</td>
-          </tr>
+          {transactions.map((transaction) => {
+            return (
+              <tr key={`${transaction.type + transaction.title}`}>
+                <td>{transaction.title}</td>
+                <td className={transaction.type}>{transaction.amount}</td>
+                <td>{transaction.category}</td>
+                <td>10/02/2021</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </S.Container>
