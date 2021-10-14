@@ -50,6 +50,24 @@ const GlobalStyles = createGlobalStyle`
     border-radius: 0.25rem;
   }
 
+  .react-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+    
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.7)
+    }
+
+    img {
+      width: 20px;
+    }
+  }
 `
 
 export default GlobalStyles
